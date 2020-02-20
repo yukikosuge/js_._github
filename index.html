@@ -1,19 +1,182 @@
-<!DOCTYPE html>
+<!-- bodyとscript文による構成 -->
+<!-- <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>js入門/.インストール</title>
-</head>
-<style>
 
-</style>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            cursor: pointer;/*マウスオーバー時にカーソルが変わる*/
+            transition:0.8s ;/*boxが変化するアニメーションの時間*/
+            margin: 0 8px 8px 0;
+        }
+
+        .circle{
+            background-color: pink;
+            border-radius: 50%;
+            transform: rotate(360deg);/*360度回転*/
+
+        }
+
+        body{
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+    </style>
+
+
+</head>
+
+
 <body>
+    
+    <div class="box" id="target1"></div>
+    <div class="box" id="target2"></div>
+    <div class="box" id="target3"></div>
     
 
     <script>
 
-        
+        'use strict';//デベロッパーツール（コンソール）にてデバック機能が発動する→ミスの箇所の行数が表示される
+
+        const target1=document.getElementById('target1')//定数という仕組み、記述の簡略化＝document.getElementById('target')の記述をtargetのみに変更
+        //定数は変更する時もid名だけ変えたら良いから運用しやすい
+        const target2=document.getElementById('target2')
+        const target3=document.getElementById('target3')
+
+
+        target1.addEventListener('click', () => {//()=>この記述をアロー関数という
+        //定数指定後は、target..addEventListener('click', () => { で上記と同じ意味合いにできる
+
+
+        //document.getElementById('target').style.background = 'pink';//=ドキュメント内のtargetがクリックされたらピンク色になるように指示
+        //document.getElementById('target').style.borderRadius='50%';
+        //上記スタイル.circleにて指定している為コメントアウト
+
+            //document=文章全体を指す
+            //.getElementById('target')=指定したidを持つ要素を文章全体から取得する指示
+            //.add=処理の追加
+            //EventListener（'click', () => {=何か起きたら（クリックされたら）何らかの処理を行う指示
+            
+
+        target1.classList.toggle('circle');//=targetの要素に追加でcircleクラス要素付与
+            //.classList.add('~~~~~~');=指定したidを持つ要素に追加でクラス指定をする
+            //.classList.toggle('~~~~~~');=指定したidを持つ要素にクラスがついていたら外し、ついていなかったら付ける動き（繰り返し）
+
+        });
+
+        target2.addEventListener('click', () => {
+            target2.classList.toggle('circle');
+        });
+
+        target3.addEventListener('click', () => {
+            target3.classList.toggle('circle');
+        });
     </script>
+
+</body>
+
+</html> -->
+
+
+
+
+
+<!-- for文とscript文での構成 -->
+<!-- ミニゲーム -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>scriptタグのみ</title>
+    <style>
+       .box {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            cursor: pointer;/*マウスオーバー時にカーソルが変わる*/
+            transition:0.8s ;/*boxが変化するアニメーションの時間*/
+            margin: 0 8px 8px 0;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        .circle{
+            background-color: pink;
+            border-radius: 50%;
+            transform: rotate(360deg);/*360度回転*/
+
+        }
+
+        body{
+            display: flex;
+            flex-wrap: wrap;
+
+        }
+
+        .win{
+            background-color: pink;
+            border-radius: 50%;
+            transform: rotate(360deg);/*360度回転*/
+
+        }
+
+        .lose{
+            transform: scale(0.9);/*若干小さくなっていく*/
+        }
+
+    </style>
+</head>
+<body>
+    
+<script>
+    'use strict';
+
+        const num =5;
+        // const winner=Math.random()*num;//「0」以上「1」未満のランダムな数値＊num =「0」以上「5」未満の数字がランダムに生成される
+        const winner=Math.floor(Math.random()*num);//Math.floorを追加する事によって小数点以下が切り捨てられる＝「0」-「4」の正数値がwinnerに入ってくる
+        //Math.ramdom()=「0」以上「1」未満のランダムな数値を生成する
+        
+
+        for (let i =0; i < num; i++){//iがnumより小さいうちはiが1ずつ増えていく、numが「5」の指定なので5個の箱ができる
+
+        //for (let i =0; i < 10; i++){
+            //iがカウンターの役割、最初iが０の状態からスタートし、iが10より小さいうちはiを1ずつ増やしながら{}の処理を行う
+            //0-9個までの間計10回は下記処理が行われる
+            //☆プログラミングでは、カウントは「０」から始まることが多い今回も１０個のboxがあるが、「０」から数えているので数字づけしたら「９」までしか無い
+            //for文を使う事によって上記「10」の値を好きな数字に設定するだけでいくらでも増やす事ができる
+
+        const div = document.createElement('div');
+        div.classList.add('box');
+        div.textContent=i;
+    
+
+        div.addEventListener('click', () => {
+                // div.classList.toggle('circle');
+            if(i === winner){
+                div.textContent='Win!';
+                div.classList.add('win');
+            }else{
+                div.textContent='Lose!';
+                div.classList.add('lose');
+
+            }
+
+            });
+
+        document.body.appendChild(div);//divをbodyの子要素として追加する＝body間に記述がなくともdivの内容が現れる
+
+        }
+
+</script>
+
 </body>
 </html>
